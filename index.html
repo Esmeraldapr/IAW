@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKCAT - Ultimate Tech Test</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #c9d1d9;
+            --accent: #FF007F;
+            --success: #238636;
+            --error: #da3633;
+            --border: #30363d;
+            --theme-color: #58a6ff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
+
+        .img-container {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .img-container img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid var(--theme-color);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            object-fit: cover;
+            transition: border-color 0.4s;
+        }
+
+        /* Navegación por Temas */
+        .nav-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            max-width: 1100px;
+        }
+
+        .nav-btn {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 150px;
+        }
+
+        .nav-btn span { font-size: 0.8rem; opacity: 0.7; margin-top: 5px; font-weight: 400; }
+
+        /* Colores de pestañas */
+        .tab-rosa.active { background: #f472b6 !important; border-color: #f472b6; color: white; }
+        .tab-morado.active { background: #a78bfa !important; border-color: #a78bfa; color: white; }
+        .tab-verde.active { background: #34d399 !important; border-color: #34d399; color: #0d1117; }
+        .tab-azul.active { background: #60a5fa !important; border-color: #60a5fa; color: white; }
+        .tab-amarillo.active { background: #fbbf24 !important; border-color: #fbbf24; color: #0d1117; }
+        .tab-naranja.active { background: #fb923c !important; border-color: #fb923c; color: white; }
+
+        /* Quiz Container */
+        #quiz-section { width: 100%; max-width: 850px; }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--theme-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .question-text { font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; line-height: 1.4; }
+
+        .options-grid { display: grid; gap: 12px; }
+
+        .option-btn {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 15px;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(:disabled) { border-color: var(--theme-color); background: #1c2128; }
+
+        /* Feedback Visual */
+        .correct { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; font-weight: bold; }
+        .incorrect { background-color: var(--error) !important; color: white !important; border-color: var(--error) !important; }
+
+        /* Resultados */
+        #results-section { display: none; text-align: center; width: 100%; }
+
+        .circle-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 30px;
+        }
+
+        svg { transform: rotate(-90deg); }
+        .circle-bg { fill: none; stroke: var(--border); stroke-width: 20; }
+        .circle-progress {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 565.48;
+            transition: stroke-dashoffset 1.5s ease-in-out, stroke 0.5s;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 25px 0;
+            color: var(--accent);
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .finish-btn {
+            background-color: var(--theme-color);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 40px auto;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="img-container">
+        <img src="HACKCAT.jpg" alt="HACKCAT Logo" id="main-logo">
+    </div>
+
+    <div class="header">
+        <h1 id="theme-display-title">Certificación Fullstack HACKCAT</h1>
+    </div>
+
+    <div class="nav-container" id="theme-nav">
+        <button class="nav-btn tab-rosa" onclick="loadTheme('t1', this, '#f472b6')">Arquitectura <span>60 preguntas</span></button>
+        <button class="nav-btn tab-morado" onclick="loadTheme('t2', this, '#a78bfa')">WordPress <span>40 preguntas</span></button>
+        <button class="nav-btn tab-verde" onclick="loadTheme('t3', this, '#34d399')">PHP Entorno <span>40 preguntas</span></button>
+        <button class="nav-btn tab-azul" onclick="loadTheme('t4', this, '#60a5fa')">Maestría PHP/DB <span>70 preguntas</span></button>
+        <button class="nav-btn tab-amarillo" onclick="loadTheme('t5', this, '#fbbf24')">Consolidación <span>50 preguntas</span></button>
+        <button class="nav-btn tab-naranja" onclick="loadTheme('t6', this, '#fb923c')">EXAMEN FINAL <span>100 preguntas</span></button>
+    </div>
+
+    <div id="quiz-section">
+        <div id="questions-container"></div>
+        <button id="btn-finalizar" class="finish-btn" onclick="showResults()">FINALIZAR COMPILACIÓN</button>
+    </div>
+
+    <div id="results-section">
+        <h2>Reporte de Ejecución</h2>
+        <div class="circle-container">
+            <svg width="280" height="280">
+                <circle class="circle-bg" cx="140" cy="140" r="90"></circle>
+                <circle id="progress-bar" class="circle-progress" cx="140" cy="140" r="90"></circle>
+            </svg>
+            <div class="score-text" id="score-display">0/0</div>
+        </div>
+        <div class="quote" id="result-quote"></div>
+        <button class="option-btn" style="text-align:center; max-width: 300px; margin: 20px auto; display: block;" onclick="location.reload()">REINICIAR SISTEMA</button>
+    </div>
+
+    <script>
+        // DATA: Todas las preguntas del usuario integradas
+        const quizData = {
+            t1: [ /* ARQUITECTURA 60 Qs */
+                { q: "Si quiero desarrollar una aplicación nativa exclusivamente para MacOS, ¿qué lenguaje elijo?", a: ["C#", "Java", "Swift", "Kotlin"], c: 2 },
+                { q: "¿Cuál es la principal característica de Java en escritorio?", a: ["Exclusivo Windows", "Multiplataforma", "Solo móvil", "Requiere Swift"], c: 1 },
+                { q: "Para Android nativo, los lenguajes de referencia son:", a: ["JS/TS", "Swift/Obj-C", "Kotlin/Java", "PHP/Python"], c: 2 },
+                { q: "¿Qué tecnología permite desarrollo Cross-platform con JS/TS?", a: ["Nativo", "Monolítico", "Cross-platform", "Capa Persistencia"], c: 2 },
+                { q: "Estándar Frontend:", a: ["HTML, JS, CSS", "PHP, Python, Java", "Node, Ruby, SQL", "C#, Swift, Kotlin"], c: 0 },
+                { q: "¿Frameworks CSS mencionados?", a: ["React/Angular", "Bootstrap/Tailwind", "Nginx/Apache", "Node/Express"], c: 1 },
+                { q: "¿Cuál NO es lenguaje de Backend?", a: ["PHP", "Python", "Swift", "Java"], c: 2 },
+                { q: "¿Qué significa Arquitectura Web?", a: ["Diseño gráfico", "Dónde se ejecuta y cómo se monta", "Lenguaje móvil", "Solo SQL"], c: 1 },
+                { q: "En un modelo 'FatClient (ThinServer)':", a: ["Servidor hace todo", "Navegador solo dibuja", "Mayor peso en el cliente", "Sin internet"], c: 2 },
+                { q: "React o Angular son ejemplos de:", a: ["FatServer", "FatClient", "Monolítico puro", "Servidor archivos"], c: 1 },
+                { q: "¿Característica FatServer (ThinClient)?", a: ["Cliente tiene lógica", "Cliente limitado a presentación", "Solo para iOS", "Sin servidor web"], c: 1 },
+                { q: "Navegador solo muestra el 'dibujo' procesado por el servidor:", a: ["FatClient", "ThinServer", "FatServer", "SaaS"], c: 2 },
+                { q: "Servidor que gestiona documentos tipo Dropbox:", a: ["Transacciones", "Bases de Datos", "Archivos", "Objetos"], c: 2 },
+                { q: "MySQL y Oracle son:", a: ["Servidores Web", "Bases de Datos", "Servidores Archivos", "Cross-platform"], c: 1 },
+                { q: "Función de Apache o Nginx:", a: ["Datos estructurados", "Entregar HTML y recursos", "Código Swift", "Archivos .exe"], c: 1 },
+                { q: "¿Qué significa SSR?", a: ["Simple Server Resource", "Server Side Rendering", "System Static Runtime", "Software Service Relation"], c: 1 },
+                { q: "Ventaja SSR:", a: ["PHP en front", "Mejor SEO y carga rápida", "Sin base de datos", "FatClient"], c: 1 },
+                { q: "En infraestructura de red, ¿qué es DC?", a: ["Data Center", "Domain Controller", "Direct Connection", "Desktop Client"], c: 1 },
+                { q: "Protocolo de acceso remoto calculadora (.rdp):", a: ["HTTP", "FTP", "RDP", "DNS"], c: 2 },
+                { q: "Extensión .exe en servidor aplicaciones:", a: ["Script JS", "Programa nativo", "Base datos", "Estilo CSS"], c: 1 },
+                { q: "Xampp es una aplicación:", a: ["3 capas", "Monolítica", "PaaS", "API REST"], c: 1 },
+                { q: "¿Por qué Xampp es monolítico?", a: ["Una base datos", "Dependencias dependen de Xampp", "Solo Windows", "FatClient"], c: 1 },
+                { q: "Protocolo de servidor web pasivo:", a: ["RDP", "FTP", "HTTP/HTTPS", "SQL"], c: 2 },
+                { q: "Conjunto de recursos interconectados (conocimiento humano):", a: ["La Web", "Cloud", "Bases Datos", "Microservicios"], c: 0 },
+                { q: "Capa de presentación es:", a: ["Back-end", "Front-end", "Persistencia", "Middleware"], c: 1 },
+                { q: "Responsabilidad capa negocio:", a: ["Responsive", "Almacenar datos", "Funcionalidades y modelo negocio", "SO"], c: 2 },
+                { q: "Tendencia capa negocio moderna:", a: ["FatClient", "Microservicios/Serverless", "HTML/CSS", "Archivos"], c: 1 },
+                { q: "Capa de persistencia:", a: ["UI móvil", "Datos y su acceso", "Seguridad HTTPS", "JS navegador"], c: 1 },
+                { q: "Ventaja BD aislada en 3 capas:", a: ["Acceso directo usuario", "Seguridad contra hackeo web", "Monolítico", "Sin internet"], c: 1 },
+                { q: "Escalabilidad en 3 capas:", a: ["Cambiar color web", "Añadir servidores lógica sin tocar BD", "Xampp", "2 capas"], c: 1 },
+                { q: "URL después del '?':", a: ["Protocolo", "Dominio", "Parámetros", "Endpoint"], c: 2 },
+                { q: "Verbo HTTP para crear recurso:", a: ["GET", "PUT", "POST", "DELETE"], c: 2 },
+                { q: "Actualizar dato existente en API:", a: ["SELECT", "PUT", "POST", "GET"], c: 1 },
+                { q: "GET en API REST equivale en BD a:", a: ["INSERT", "UPDATE", "DELETE", "SELECT"], c: 3 },
+                { q: "Función DELETE:", a: ["Actualizar", "Borrar información", "Crear tablas", "Leer parámetros"], c: 1 },
+                { q: "Orden componentes URL:", a: ["Dom-Prot-Par-End", "Prot-Dom-Carp-End-Par", "Carp-Prot-Par-Met", "Met-Capa-Dat-Serv"], c: 1 },
+                { q: "¿Qué originó el grid computing?", a: ["SaaS", "Límites clúster/supercomputación", "NoSQL", "JS"], c: 1 },
+                { q: "Utility Computing:", a: ["Apps Windows", "Servicios empaquetados tipo agua/luz", "C#", "Archivos"], c: 1 },
+                { q: "¿Qué significa XaaS?", a: ["X-platform", "Everything as a Service", "Extended System", "X-axis"], c: 1 },
+                { q: "Nivel alto pirámide Cloud (usuario final):", a: ["IaaS", "PaaS", "SaaS", "SSR"], c: 2 },
+                { q: "Google Workspace y Office 365 son:", a: ["IaaS", "PaaS", "SaaS", "Monolíticos"], c: 2 },
+                { q: "¿Qué da el PaaS?", a: ["Hardware físico", "Contenedores para subir código", "App final", "SO vacío"], c: 1 },
+                { q: "Heroku y Google App Engine son:", a: ["SaaS", "PaaS", "IaaS", "Archivos"], c: 1 },
+                { q: "En IaaS:", a: ["Proveedor instala código", "Control total infraestructura", "Solo Gmail", "Sin datos"], c: 1 },
+                { q: "AWS y Azure infraestructura:", a: ["IaaS", "SaaS", "FatClients", "Browsers"], c: 0 },
+                { q: "Admin sistemas que instala su SO busca:", a: ["SaaS", "PaaS", "IaaS", "Monolítico"], c: 2 },
+                { q: "Desarrollador que solo sube código busca:", a: ["IaaS", "PaaS", "RDP", "FatServer"], c: 1 },
+                { q: "Capa MySQL en 3 capas:", a: ["Presentación", "Lógica", "Persistencia", "Cliente"], c: 2 },
+                { q: "Ejemplo NoSQL:", a: ["MySQL", "Oracle", "NoSQL genérico", "PHP"], c: 2 },
+                { q: "Clúster servidores web permite:", a: ["Swift en Android", "Balancear carga", "Sin negocio", "FatClient"], c: 1 },
+                { q: "Arquitectura que divide Front/Back/Datos:", a: ["Monolítica", "2 niveles", "3 capas", "Grid"], c: 2 },
+                { q: "Objective-C es para:", a: ["Android", "WP", "iOS", "Desktop"], c: 2 },
+                { q: "Lenguaje backend JS:", a: ["Python", "Node", "PHP", "Java"], c: 1 },
+                { q: "Web Responsive:", a: ["Nginx", "Adaptable a pantallas", "FatServer", "Sin CSS"], c: 1 },
+                { q: "El modelo de negocio reside en:", a: ["Presentación", "Datos", "Lógica", "Navegador"], c: 2 },
+                { q: "Protocolo traduce dominios a IP:", a: ["HTTP", "TCP", "DNS", "IP"], c: 2 },
+                { q: "Unidad básica servidor archivos:", a: ["Tablas", "Documentos/Archivos", "Endpoints", "POST"], c: 1 },
+                { q: "Servidor web proceso pasivo:", a: ["No hace nada", "Espera peticiones", "FatClients", "Apagado"], c: 1 },
+                { q: "Salesforce y Trello son:", a: ["IaaS", "PaaS", "SaaS", "Backend"], c: 2 },
+                { q: "Precursor XaaS:", a: ["C#", "Cloud", "Utility computing", "Monolítico"], c: 2 }
+            ],
+            t2: [ /* WORDPRESS 40 Qs */
+                { q: "Función principal CMS:", a: ["Programar DB", "Estructura/Contenido sin programar base", "Sustituir Apache", "Hardware"], c: 1 },
+                { q: "Componentes CMS:", a: ["Front", "Back", "Ambos", "Solo SQL"], c: 2 },
+                { q: "WordPress es:", a: ["Código cerrado", "Código abierto", "Solo LMS", "Hardware"], c: 1 },
+                { q: "WordPress.com vs .org:", a: ["Org es empresa", "Com es SaaS menos libertad", "Org sin plugins", "Com manual"], c: 1 },
+                { q: "Instalación hosting propio, control total:", a: ["WP.com", "WP.org", "Ecommerce", "Xampp"], c: 1 },
+                { q: "Fichero que arranca WP:", a: ["wp-config", "wp-admin", "index.php", "wp-content"], c: 2 },
+                { q: "Archivo credenciales DB:", a: ["index", "settings", "wp-config.php", "functions"], c: 2 },
+                { q: "Tipo archivo wp-config:", a: ["HTML", "JS", "PHP", "CSS"], c: 2 },
+                { q: "Datos obligatorios wp-config:", a: ["DB Name, User, Pass", "Dom, Mail, Name", "IP, FTP, Apache", "Versiones"], c: 0 },
+                { q: "Host local por defecto:", a: ["192.168", "localhost / 127.0.0.1", "wp.com", "dns.local"], c: 1 },
+                { q: "Servidor local gestión archivos:", a: ["Nginx", "FileZilla", "Apache", "VS Code"], c: 2 },
+                { q: "URL login WP:", a: ["wp-content", "wp-login.php", "index.css", "db-config"], c: 1 },
+                { q: "Cambiar tema en WP:", a: ["Plugins", "Entradas", "Apariencia", "Medios"], c: 2 },
+                { q: "¿Qué son los plugins?", a: ["Código base", "Funcionalidades extra sin programar", "Servidor BD", "Fotos"], c: 1 },
+                { q: "Lenguaje plugins:", a: ["JS", "PHP", "Python", "HTML"], c: 1 },
+                { q: "Carpeta plugins y temas:", a: ["wp-admin", "wp-includes", "wp-content", "wp-config"], c: 2 },
+                { q: "¿Qué más hay en wp-content?", a: ["Pass", "WP Kernel", "Medios (Uploads)", "Apache config"], c: 2 },
+                { q: "Contenido wp-admin:", a: ["Fotos", "Páginas administración", "Estilos CSS", "SQL"], c: 1 },
+                { q: "Entradas vs Páginas:", a: ["Diseño vs Contenido", "Artículos dinámicos vs Estáticas", "User vs Admin", "Iguales"], c: 1 },
+                { q: "Ubicación fotos en local:", a: ["wp-admin", "htdocs (dentro WP)", "wp-config", "themes"], c: 1 },
+                { q: "Error permisos al subir:", a: ["Borrar index", "Cambiar permisos/grupos", "Reinstalar SO", "Pass BD"], c: 1 },
+                { q: "Comando permisos Linux:", a: ["chown", "chmod", "apt-get", "cd"], c: 1 },
+                { q: "Permiso '777' recursivo:", a: ["Lectura admin", "Todo para todos", "Bloqueo", "Solo FTP"], c: 1 },
+                { q: "Parámetro '-R' consola:", a: ["Reiniciar", "Recursivo", "Read only", "Remove"], c: 1 },
+                { q: "Cliente subida real:", a: ["SQL", "FTP (FileZilla)", "RDP", "Browser"], c: 1 },
+                { q: "¿Por qué pide FTP al instalar plugin?", a: ["Bot check", "Sin permisos escritura disco", "Solo FTP", "Falta config"], c: 1 },
+                { q: "Variable constante:", a: ["Mutable", "Inalterable tras definición", "Solo front", "Plugin activo"], c: 1 },
+                { q: "Constante FS_METHOD 'direct':", a: ["Borra DB", "Evita pedir FTP en local", "Solo localhost", "ThinClient"], c: 1 },
+                { q: "wp-config permite configurar:", a: ["Color dashboard", "Método instalación", "CPU física", "Contrato .com"], c: 1 },
+                { q: "Acceso remoto flujo:", a: [".exe", ".rdp", ".zip", ".php"], c: 1 },
+                { q: "Descarga WP.org formato:", a: [".exe", ".zip", ".sql", ".pdf"], c: 1 },
+                { q: "Permisos 777 en producción:", a: ["Recomendado", "Peligroso (riesgo seguridad)", "Más rápido", "No afecta"], c: 1 },
+                { q: "Cambiar propietario Linux:", a: ["chmod", "chown", "chgroup", "touch"], c: 1 },
+                { q: "LMS:", a: ["Gestión BD", "Learning Management Systems", "Mensajería", "Diseño"], c: 1 },
+                { q: "Apuntar instalación a internet:", a: ["IP privada", "DNS / IP pública", "index.css", "Impresora"], c: 1 },
+                { q: "Lenguaje WP:", a: ["Java", "C#", "PHP", "Python"], c: 2 },
+                { q: "Esqueleto web CMS:", a: ["DB vacía", "Estructura hecha", "Cableado", "Office"], c: 1 },
+                { q: "Biblioteca medios gestiona:", a: ["Pass", "Plugins pago", "Imágenes/Vídeos", "Apache"], c: 2 },
+                { q: "Borrar index.php en WP:", a: ["Sin fotos", "No arranca", "Backup auto", "Solo FTP"], c: 1 },
+                { q: "Instalación preconfigurada:", a: ["Manual .org", "WP.com (2 min)", "Config manual", "chmod 777"], c: 1 }
+            ],
+            PHP: [ /* PHP ENTORNO 40 Qs */
+                { q: "Función PHP:", a: ["UI vectorial", "Lógica para HTML", "Compilar hardware", "Sustituir <main>"], c: 1 },
+                { q: "Requisito ver PHP:", a: ["Doble clic", "Apache levantado", "Compilar", "IE"], c: 1 },
+                { q: "Carpeta Xampp proyectos:", a: ["phpbin", "scripts", "htdocs", "apache_files"], c: 2 },
+                { q: "PHP es lenguaje:", a: ["Compilado", "Interpretado", "Estático", "Solo lectura"], c: 1 },
+                { q: "CDN:", a: ["Core Data", "Content Delivery Network", "Compiled Node", "Computer Desk"], c: 1 },
+                { q: "Objetivo CDN:", a: ["Copias cercanas usuario", "Traducir local", "Reemplazar Apache", "Pass WP"], c: 0 },
+                { q: "Beneficio CDN:", a: ["Latencia alta", "Carga balanceada", "Sin CSS", "PHP cliente"], c: 1 },
+                { q: "Usar Bootstrap CDN:", a: ["Bajar 50GB", "Copiar enlace HTML", "Instalar server", "Escribir PHP"], c: 1 },
+                { q: "Scripts al final por:", a: ["Navegador lee abajo", "Velocidad y evitar bloqueos", "PHP obliga", "Estética"], c: 1 },
+                { q: "Abrir index.php sin server:", a: ["Lógica OK", "Solo código/Fallo", "Auto-compila", "Texto .txt"], c: 1 },
+                { q: "Etiqueta <main>:", a: ["Cálculos PHP", "Semántica indexación", "Menú Bootstrap", "Arranca Apache"], c: 1 },
+                { q: "Símbolo variable PHP:", a: ["&", "#", "$", "@"], c: 2 },
+                { q: "Función mostrar pantalla:", a: ["display", "echo", "show", "print_all"], c: 1 },
+                { q: "Variable constante:", a: ["Cambia", "Inalterable", "Solo Integer", "$ nombre"], c: 1 },
+                { q: "Función constante PHP:", a: ["constant()", "define()", "setConst()", "var_const()"], c: 1 },
+                { q: "Parámetros define:", a: ["Valor, Nombre", "Nombre, Valor", "$ , Valor", "Solo valor"], c: 1 },
+                { q: "Usar constante:", a: ["PHP las crea", "Definida previamente", "Solo include", "$ nombre"], c: 1 },
+                { q: "Separar constantes.php por:", a: ["Prohibido index", "Centralizar/Limpiar", "Apache rápido", "Evitar echo"], c: 1 },
+                { q: "Incorporar externo:", a: ["<link>", "include", "href", "Copy-paste"], c: 1 },
+                { q: "Include superior:", a: ["Acceso final", "Acceso total desde ahí", "Bloquea HTML", "Son variables"], c: 1 },
+                { q: "String:", a: ["Decimales", "Cadenas texto", "Listas", "True/False"], c: 1 },
+                { q: "Enteros:", a: ["Float", "Integer", "Boolean", "Array"], c: 1 },
+                { q: "Float:", a: ["Texto", "Decimales", "0 o 1", "Listas"], c: 1 },
+                { q: "Booleano:", a: ["1 al 10", "String/Int", "True/False", "null"], c: 2 },
+                { q: "Lista PHP:", a: ["Bundle", "Collection", "Array", "Group"], c: 2 },
+                { q: "Operador ++:", a: ["Mult x2", "Incrementa 1", "Igualdad", "Suma otro"], c: 1 },
+                { q: "Operador --:", a: ["Comentario", "Decrementa 1", "Div /2", "Borra mem"], c: 1 },
+                { q: "Operador %=:", a: ["Porcentaje", "Asignación resto", "x100", "String"], c: 1 },
+                { q: "Suma 5 a edad:", a: ["=+ 5", "+= 5", "+ 5", "echo + 5"], c: 1 },
+                { q: "Menú.php Bootstrap:", a: ["Barra reutilizable", "Config DB", "Constantes", "Interprete rápido"], c: 0 },
+                { q: "Ventaja separar menú:", a: ["3D", "Cambio en uno = todos", "Sin CSS", "Sin Apache"], c: 1 },
+                { q: "Sintaxis include:", a: ["include('./m.php')", "<include>", "import", "$include"], c: 0 },
+                { q: "PHP puro lógico:", a: ["HTML obligado", "No requiere HTML", "Solo echo", "index.php"], c: 1 },
+                { q: "Tráfico CDN:", a: ["Aumenta", "Colapsa", "Balancea/Evita colapso", "Elimina server"], c: 2 },
+                { q: "PoP CDN:", a: ["Venta", "Servidores geográficos", "Errores", "VS Code"], c: 1 },
+                { q: "Mostrar constante PI:", a: ["echo $PI", "echo PI", "display(PI)", "print $PI"], c: 1 },
+                { q: "PHP interpretación:", a: ["Código fuente cliente", "Lógica servidor pre-render", "Sin internet", "Hack BD"], c: 1 },
+                { q: "htdocs:", a: ["VS Code solo", "Raíz Apache", "Drivers GPU", "Descargas Chrome"], c: 1 },
+                { q: "PHP Formularios:", a: ["Color", "Gestionar/BD", "Sin teclado", "Decorar"], c: 1 },
+                { q: "Ver cambio PHP:", a: ["Doble clic", "Refrescar localhost", "Compilar", "CMD Windows"], c: 1 }
+            ],
+            PHP: [ /* MAESTRÍA LOGICA/DB 70 Qs */
+                { q: "Valor lógico selección:", a: ["Entero", "Booleano True", "String", "Constante"], c: 1 },
+                { q: "Cierto vs Falso:", a: ["Solo If", "If-Else", "If-Else If", "Switch"], c: 1 },
+                { q: "if - else if:", a: ["Inclusivas", "Ejecuta todos", "Excluyentes", "Solo String"], c: 2 },
+                { q: "if ($nota < 5 && $estado):", a: ["Una", "Ninguna", "Ambas verdaderas", "Nota < 5 solo"], c: 2 },
+                { q: "Bloque else final:", a: ["Si todas previas falsas", "Reinicia", "Sale bucle", "Define nueva"], c: 0 },
+                { q: "Switch vs If:", a: ["Switch solo bool", "Switch valor vs casos cascada", "Switch lento", "Sin echo"], c: 1 },
+                { q: "Sin break en switch:", a: ["Error", "Cascada (ejecuta siguientes)", "Detiene", "Default"], c: 1 },
+                { q: "Default switch:", a: ["Primero", "Si nada coincide", "Cierra DB", "Variables"], c: 1 },
+                { q: "Bucle for:", a: ["Mientras falso", "Inicio, final, incremento", "Selección", "Solo BD"], c: 1 },
+                { q: "Bucle while:", a: ["Siempre 1 vez", "0 a N", "Solo array", "10 veces"], c: 1 },
+                { q: "While vs Do-while:", a: ["While rápido", "Do-while evalúa inicio", "Do-while garantiza 1 (1 a N)", "Iguales"], c: 2 },
+                { q: "i++ en for:", a: ["Inicio", "Salida", "Incremento iteración", "Constante"], c: 2 },
+                { q: "Array en PHP:", a: ["Un dato", "Colección dinámica/índices", "URL", "Server DB"], c: 1 },
+                { q: "$alumnos = [B, M, L], Maria es:", a: ["0", "1", "2", "-1"], c: 1 },
+                { q: "Índice que NO existe:", a: ["0", "100", "-1", "1"], c: 2 },
+                { q: "Añadir FINAL array:", a: ["unshift", "push", "unset", "values"], c: 1 },
+                { q: "Añadir PRINCIPIO array:", a: ["push", "pop", "unshift", "shift"], c: 2 },
+                { q: "Recorrer automático:", a: ["for", "while", "foreach", "switch"], c: 2 },
+                { q: "unset() en posición:", a: ["Reordena", "Hueco/No reordena", "Borra todo", "Vacío"], c: 1 },
+                { q: "Reasignar tras unset:", a: ["push", "values", "foreach", "Reiniciar Apache"], c: 1 },
+                { q: "array_pop():", a: ["Elimina primero", "Elimina último", "Busca", "Reordena"], c: 1 },
+                { q: "array_shift():", a: ["Último", "Primero", "Añadir", "Nombre"], c: 1 },
+                { q: "¿Por qué pop/shift no necesitan values?", a: ["Ocultan", "Reordenan auto", "Solo constantes", "Funciones DB"], c: 1 },
+                { q: "Buscar posición valor:", a: ["unset", "search", "values", "define"], c: 1 },
+                { q: "Agrupar código repetido:", a: ["Constante", "Función", "If", "BD"], c: 1 },
+                { q: "Etiqueta captura texto/date:", a: ["select", "input", "option", "form"], c: 1 },
+                { q: "<select>:", a: ["Botón", "Protegido", "Desplegable", "Conexión"], c: 2 },
+                { q: "A priori vs A posteriori:", a: ["Procesado", "Interacción viva (checkbox)", "Sin browser", "No existe"], c: 1 },
+                { q: "Checkbox habilita campo:", a: ["Post", "Priori", "GET", "Modular"], c: 1 },
+                { q: "Métodos envío p1 a p2:", a: ["define/include", "POST/GET", "MySQL/Apache", "for/foreach"], c: 1 },
+                { q: "$_POST:", a: ["URL", "Ocultos/Seguridad/Estética", "Rápido filtros", "Enteros"], c: 1 },
+                { q: "$_GET navegador:", a: ["Cifrados", "En URL tras ?", "wp-config", "Consola"], c: 1 },
+                { q: "Uso útil $_GET:", a: ["Passwords", "Filtrado vía URL", "Host root", "Borrar"], c: 1 },
+                { q: "Método preferido registro:", a: ["GET", "POST", "include", "push"], c: 1 },
+                { q: "Comunicación 3 capas:", a: ["Directa BD", "HTTP", "Zip", "Fibra"], c: 1 },
+                { q: "PHP a MySQL:", a: ["new mysqli()", "define_conn", "mysql_start", "include"], c: 0 },
+                { q: "4 parámetros conexión:", a: ["Name/Pass", "Host/User/Pass/DB", "IP/DNS", "Admin/Config"], c: 1 },
+                { q: "User Xampp defecto:", a: ["admin", "root", "user", "vacio"], c: 1 },
+                { q: "Puerto MySQL:", a: ["80", "443", "3306", "21"], c: 2 },
+                { q: "Variable $conn para:", a: ["No apagar", "Usar en otros con include", "Solo $conn", "Ocultar"], c: 1 },
+                { q: "Query mano peligrosa:", a: ["Lenta", "SQL Injection", "Solo GET", "Sin echo"], c: 1 },
+                { q: "Ventaja PreparedStatement:", a: ["Rápido", "Separa plantilla de datos (bloquea ataques)", "Sin DB", "Linux"], c: 1 },
+                { q: "Símbolo marcador PS:", a: ["$", "&", "?", "#"], c: 2 },
+                { q: "Regla oro DB:", a: ["GET insert", "PS si datos vienen de usuario", "No Apache", "777"], c: 1 },
+                { q: "Acceso variable otro archivo sin include:", a: ["Auto", "Error/No existe", "Bloqueo", "Cero"], c: 1 },
+                { q: "$a[] = 'nuevo':", a: ["Inicio", "Final (push)", "Random", "Borra"], c: 1 },
+                { q: "Booleano 0:", a: ["True", "False", "Null", "Undef"], c: 1 },
+                { q: "Operador Multiplicación:", a: ["^", "x", "*", "%"], c: 2 },
+                { q: "Operador %:", a: ["IVA", "Resto división", "Dividir 100", "Potencia"], c: 1 },
+                { q: "Lenguaje priori cliente:", a: ["PHP", "SQL", "JS", "Apache"], c: 2 },
+                { q: "Define crea:", a: ["Global mutable", "Global inmutable", "Local", "Numérico"], c: 1 },
+                { q: "Credenciales wp-config:", a: ["$", "define", "Arrays", "Coment"], c: 1 },
+                { q: "(5 == '5'):", a: ["False", "True (conversión débil)", "Error", "Solo === "], c: 1 },
+                { q: "Permisos totales:", a: ["444", "777", "root", "htdocs"], c: 1 },
+                { q: "Server DB estudiado:", a: ["Apache", "Nginx", "MySQL", "FileZilla"], c: 2 },
+                { q: "Carpeta Xampp Win:", a: ["/var", "/htdocs", "/program", "/desktop"], c: 1 },
+                { q: "Extensión lógica server:", a: [".html", ".css", ".php", ".js"], c: 2 },
+                { q: "Condición siempre true while:", a: ["Bucle infinito", "Rápido", "Error sintaxis", "Optimiza"], c: 0 },
+                { q: "Concatenar strings:", a: ["+", ".", "&", ","], c: 1 },
+                { q: "Función server 3 capas:", a: ["Discos", "Negociar petición/Lógica", "Dibujar", "Traducir Java"], c: 1 },
+                { q: "SQL Injection:", a: ["Virus", "Código malicioso vía inputs", "Color", "DDoS"], c: 1 },
+                { q: "Método prepare():", a: ["Limpiar", "Plantilla con marcadores para seguridad", "FTP", "WordPress auto"], c: 1 },
+                { q: "Host misma máquina:", a: ["internet", "localhost", "remote", "IP"], c: 1 },
+                { q: "Liberar índice array:", a: ["delete", "unset", "remove", "clear"], c: 1 },
+                { q: "Distinto de:", a: ["=", ">=", "!=", "~"], c: 2 },
+                { q: "Ventaja foreach:", a: ["Rápido", "No necesitas tamaño", "Borra", "PHP 8"], c: 1 },
+                { q: "Atributo action:", a: ["Color", "Archivo procesador", "Nombre BD", "Método"], c: 1 },
+                { q: "Atributo method:", a: ["URL", "POST o GET", "Input type", "User"], c: 1 },
+                { q: "Include inexistente:", a: ["Fatal Error", "Warning / Sigue", "Reinicio", "Auto"], c: 1 },
+                { q: "Arquitectura capas:", a: ["Muchos archivos", "División Presentación/Negocio/Datos", "Colores", "Mismo PC"], c: 1 }
+            ],
+            PHP: [ /* CONSOLIDACIÓN 50 Qs */
+                { q: "No se ejecuta en navegador:", a: ["HTML", "CSS", "PHP", "JS"], c: 2 },
+                { q: "Gmail/Odoo:", a: ["IaaS", "SaaS", "PaaS", "Nativo"], c: 1 },
+                { q: "Red virtual/SO desde cero:", a: ["SaaS", "PaaS", "IaaS", "CMS"], c: 2 },
+                { q: "Heroku:", a: ["SaaS", "PaaS", "IaaS", "Xampp"], c: 1 },
+                { q: "WP usa principalmente:", a: ["Java", "Ruby", "PHP/MySQL", "Python"], c: 2 },
+                { q: "Instalar plugins WP:", a: ["Menú", "FTP", "Repo externo", "Todas"], c: 3 },
+                { q: "Plugin WP:", a: ["Tema", "Funcionalidad extra", "Config DB", "Admin"], c: 1 },
+                { q: "Ofimática web:", a: ["Local", "Tiempo real/Cloud", "Offline", "FatServer"], c: 1 },
+                { q: "Lógica server en HTML, extensión:", a: [".html", ".php", ".js", ".sql"], c: 1 },
+                { q: "Etiquetas PHP:", a: ["script", "<?php ?>", "{}", "<php>"], c: 1 },
+                { q: "Envío muestra datos URL:", a: ["POST", "SEND", "GET", "REQ"], c: 2 },
+                { q: "POST parámetros en:", a: ["URL", "Body", "wp-config", "htdocs"], c: 1 },
+                { q: "Recuperar POST 'user':", a: ["$GET", "$_POST['user']", "$u", "assoc"], c: 1 },
+                { q: "CRUD:", a: ["C-R-U-D", "C-R-U-D", "C-R-U-D", "C-R-U-D"], c: 0 },
+                { q: "bind_param 'sssi':", a: ["4 strings", "3 strings 1 int", "1 str 3 int", "Constante"], c: 1 },
+                { q: "fetch_assoc() devuelve:", a: ["Filas totales", "Array asociativo fila", "Conexión", "Error"], c: 1 },
+                { q: "Cerrar conexión por:", a: ["Borrar", "Seguridad/Recursos", "JS", "GET a POST"], c: 1 },
+                { q: "Nodos DOM y atributos:", a: ["PHP", "SQL", "JS", "Apache"], c: 2 },
+                { q: "Diferencia JS/PHP:", a: ["Antigüedad", "JS Browser / PHP Server", "WP", "Ninguna"], c: 1 },
+                { q: "Update sin recargar:", a: ["PHP", "SQL", "JS", "CSS"], c: 2 },
+                { q: "Modificar registro SQL:", a: ["INSERT", "SELECT", "UPDATE", "ALTER"], c: 2 },
+                { q: "Array nombres vs números:", a: ["Indexado", "Asociativo", "Constante", "Local"], c: 1 },
+                { q: "config.php contiene:", a: ["HTML", "Conexión DB", "CSS", "JS"], c: 1 },
+                { q: "Node DOM JS:", a: ["Server", "Cualquier elemento árbol", "Constante", "Plugin"], c: 1 },
+                { q: "Acceso Universal:", a: ["PC potente", "Cualquier navegador/dispositivo", "Solo creador", "No internet"], c: 1 },
+                { q: "Evita bind_param:", a: ["Lentitud", "SQL Injection", "CSS", "Stop Apache"], c: 1 },
+                { q: "Flujo PS:", a: ["E-P-B", "Prepare-Bind-Execute", "B-E-P", "E-B-C"], c: 1 },
+                { q: "Result 10 filas, fetch_assoc():", a: ["1 vez", "En bucle", "Solo 1ra", "GET"], c: 1 },
+                { q: "Bootstrap responsive:", a: ["PHP", "Clases CSS/Libs", "SQL", "FTP"], c: 1 },
+                { q: "3 capas separa:", a: ["H-C-J", "Cliente/Servidor/Datos", "S-P-I", "G-P-R"], c: 1 }
+            ],
+            EX: [ /* GRAN EXAMEN FINAL 100 Qs */
+                { q: "App código acoplado un bloque:", a: ["Distribuida", "Monolítica", "Micro", "SaaS"], c: 1 },
+                { q: "Capa procesa reglas/cálculos:", a: ["Datos", "Presentación", "Lógica", "Red"], c: 2 },
+                { q: "FatClient mayor peso en:", a: ["Servidor", "BD", "Navegador", "Load Balancer"], c: 2 },
+                { q: "Servidor vacío AWS instalar SO:", a: ["SaaS", "PaaS", "IaaS", "BaaS"], c: 2 },
+                { q: "Google Workspace:", a: ["IaaS", "PaaS", "SaaS", "On-premise"], c: 2 },
+                { q: "Subir código sin gestionar server:", a: ["IaaS", "PaaS", "Monolítico", "Físico"], c: 1 },
+                { q: "3 capas prefiere por:", a: ["Barata", "Seguridad/Escalabilidad", "Sin internet", "Solo HTML"], c: 1 },
+                { q: "Distribuye tráfico evita colapso:", a: ["DNS", "Balanceador carga", "Switch", "Proxy"], c: 1 },
+                { q: "Serverless se paga por:", a: ["Hardware", "Tiempo ejecución código", "Apps estáticas", "PHP"], c: 1 },
+                { q: "CDN mejora velocidad por:", a: ["Bandwidth", "Servidores cercanos", "Comprimir BD", "Elimina JS"], c: 1 },
+                { q: "Archivo conexión WP:", a: ["index", "admin", "wp-config.php", "functions"], c: 2 },
+                { q: "Cambiar diseño WP:", a: ["Plugins", "Temas", "Entradas", "Widgets"], c: 1 },
+                { q: "Plugin WP añade:", a: ["Pass", "Funcionalidad extra", "Fotos", "Java"], c: 1 },
+                { q: "Carpeta temas/plugins:", a: ["admin", "includes", "wp-content", "htdocs"], c: 2 },
+                { q: "WP.org vs .com:", a: ["Pago", "Manual/Control total", "Sin MySQL", "Estático"], c: 1 },
+                { q: "Loop WP:", a: ["Error", "PHP recupera/muestra posts", "Backup", "Menú"], c: 1 },
+                { q: "Shortcode entre:", a: ["<>", "{}", "[]", "/**/"], c: 2 },
+                { q: "Mini-plugin interno tema:", a: ["css", "functions.php", "header", "footer"], c: 1 },
+                { q: "Permiso 777:", a: ["Admin lee", "Acceso total todos", "Virus", "Solo lectura"], c: 1 },
+                { q: "Subir archivos manual:", a: ["HTTP", "FTP", "RDP", "SQL"], c: 1 },
+                { q: "Símbolo variable PHP:", a: ["&", "#", "$", "@"], c: 2 },
+                { q: "Declarar constante:", a: ["const", "define()", "$const", "static"], c: 1 },
+                { q: "Dato bool:", a: ["Int", "Float", "Str", "Boolean"], c: 3 },
+                { q: "Float:", a: ["Int", "Str", "Decimales", "Obj"], c: 2 },
+                { q: "Concatenar PHP:", a: ["+", ".", "&", ","], c: 1 },
+                { q: " echo sirve para:", a: ["Recibir", "Mostrar", "Borrar", "Conectar"], c: 1 },
+                { q: "Include vs Require:", a: ["Include rápido", "Require detiene si falla", "Include HTML", "No dif"], c: 1 },
+                { q: "5 == '5':", a: ["True", "False", "Error", "Null"], c: 0 },
+                { q: "5 === '5':", a: ["True", "False", "0", "1"], c: 1 },
+                { q: "var_dump() depuración:", a: ["Borrar", "Contenido/Tipo", "Mail", "PDF"], c: 1 },
+                { q: "Evaluar condición falsa, uso:", a: ["if", "else", "switch", "while"], c: 1 },
+                { q: "Variable vs muchos valores:", a: ["If múltiple", "for", "switch", "do-while"], c: 2 },
+                { q: "Bucle for:", a: ["I-C-I", "Solo cond", "Array", "DB"], c: 0 },
+                { q: "Do-while mínimo:", a: ["0", "1", "10", "Inf"], c: 1 },
+                { q: "While ejecuta:", a: ["Fijo", "Mientras true (0-N)", "Solo array", "Hasta else"], c: 1 },
+                { q: "Saltar iteración:", a: ["break", "continue", "stop", "exit"], c: 1 },
+                { q: "Salir bucle:", a: ["continue", "break", "finish", "end"], c: 1 },
+                { q: "Switch evita cascada:", a: ["default", "case", "break", "stop"], c: 2 },
+                { q: "While cond true siempre:", a: ["Off", "Infinito", "Sintaxis", "Browser"], c: 1 },
+                { q: "Foreach recorre:", a: ["DB", "Arrays", "TXT", "FTP"], c: 1 },
+                { q: "Primer índice indexado:", a: ["1", "-1", "0", "first"], c: 2 },
+                { q: "Claves texto array:", a: ["Indexado", "Asociativo", "Const", "Multi"], c: 1 },
+                { q: "Añadir final array:", a: ["push", "unshift", "pop", "unset"], c: 0 },
+                { q: "Añadir principio array:", a: ["push", "pop", "unshift", "shift"], c: 2 },
+                { q: "Eliminar último:", a: ["shift", "pop", "unset", "values"], c: 1 },
+                { q: "unset($a[1]) provoca:", a: ["Reordena", "Hueco", "Borrado todo", "Cero"], c: 1 },
+                { q: "Reordenar índices:", a: ["push", "values", "sort", "foreach"], c: 1 },
+                { q: "array_search():", a: ["Borra", "Devuelve índice", "Cuenta", "Ordena"], c: 1 },
+                { q: "Contar array:", a: ["count", "length", "size", "total"], c: 0 },
+                { q: "Array dentro array:", a: ["Multidimensional", "Infinito", "Obj", "Const"], c: 0 },
+                { q: "Atributo action form:", a: ["Color", "Archivo procesador", "Método", "User"], c: 1 },
+                { q: "Método datos URL:", a: ["POST", "GET", "SEND", "FETCH"], c: 1 },
+                { q: "Seguro passwords:", a: ["GET", "POST", "URL", "FTP"], c: 1 },
+                { q: "Recoger POST edad:", a: ["$GET", "$_POST['edad']", "$edad", "$_SES"], c: 1 },
+                { q: "Desplegable HTML:", a: ["input", "select", "dropdown", "list"], c: 1 },
+                { q: "Diferencia GET/POST tamaño:", a: ["GET más", "POST más/archivos", "Igual", "GET inf"], c: 1 },
+                { q: "Actuar priori form:", a: ["Procesar", "Validar/Cambiar UI", "BD", "Logout"], c: 1 },
+                { q: "Enviar archivos enctype:", a: ["file", "multipart/form-data", "image", "upload"], c: 1 },
+                { q: "Superglobal server/headers:", a: ["POST", "SERVER", "ENV", "FILES"], c: 1 },
+                { q: "Botón envía auto:", a: ["button", "submit", "reset", "send"], c: 1 },
+                { q: "SQL extraer datos:", a: ["INSERT", "UPDATE", "SELECT", "DELETE"], c: 2 },
+                { q: "INSERT INTO:", a: ["Crea tabla", "Modifica", "Crea registro", "Borra"], c: 2 },
+                { q: "Filtrar SQL:", a: ["GROUP", "ORDER", "WHERE", "LIMIT"], c: 2 },
+                { q: "SQL Injection:", a: ["Acelera", "Ataque código malicioso", "Conecta", "Update"], c: 1 },
+                { q: "Prepared Statements:", a: ["Bonito", "Evitar inyecciones/Separa datos", "2 BD", "Borrar"], c: 1 },
+                { q: "bind_param 'si':", a: ["Str/Int", "Sel/Ins", "Start", "Seguro"], c: 0 },
+                { q: "DROP TABLE:", a: ["Borra fila", "Borra tabla completa", "Quita", "Vacía"], c: 1 },
+                { q: "fetch_assoc():", a: ["Str", "Array asociativo", "JSON", "Constante"], c: 1 },
+                { q: "UPDATE:", a: ["Install", "Modificar datos", "Backup", "Nombre"], c: 1 },
+                { q: "Puerto MySQL:", a: ["80", "443", "3306", "21"], c: 2 },
+                { q: "Objeto conexión profesional:", a: ["mysql_conn", "mysqli/PDO", "db_open", "sql"], c: 1 },
+                { q: "User Xampp defecto:", a: ["admin", "user", "root", "wp"], c: 2 },
+                { q: "No dejar conexión abierta:", a: ["Luz", "Seguridad/Recursos", "Borra datos", "404"], c: 1 },
+                { q: ".htaccess de:", a: ["Nginx", "Apache", "MySQL", "Win"], c: 1 },
+                { q: "Error HTTP 500:", a: ["404", "Internal Server Error", "Acceso", "OK"], c: 1 },
+                { q: "Escapado caracteres:", a: ["Espacios", "Seguro evita ejecución", "Traduce", "Upper"], c: 1 },
+                { q: "Primary Key:", a: ["Texto", "Única y no nula", "Opcional", "Igual"], c: 1 },
+                { q: "HTTPS cifrado para:", a: ["Speed", "Privacidad entre C/S", "HTML", "No cookies"], c: 1 },
+                { q: "Hashing pass:", a: ["Texto plano", "Irreversible", "GET", "Txt file"], c: 1 },
+                { q: "JS ejecuta en:", a: ["Server", "Browser", "BD", "OS"], c: 1 },
+                { q: "DOM representa:", a: ["Files", "Arbol nodos", "Sheet", "SQL"], c: 1 },
+                { q: "Seleccionar ID JS:", a: ["class", "getElementById", "select", "fetch"], c: 1 },
+                { q: "Validar campo antes enviar:", a: ["SQL", "PHP", "JS", "CSS"], c: 2 },
+                { q: "Variable JS moderna:", a: ["$", "let/const", "init", "define"], c: 1 },
+                { q: "querySelector('.clase'):", a: ["Borra", "Selecciona primero", "Color", "New"], c: 1 },
+                { q: "Eventos JS:", a: ["Fiestas", "Acciones usuario", "Errores", "Consultas"], c: 1 },
+                { q: "JS vs PHP:", a: ["Old", "JS Cliente / PHP Server", "Design", "None"], c: 1 },
+                { q: "Cambiar texto JS:", a: ["val", "innerHTML/textContent", "src", "href"], c: 1 },
+                { q: "Web dinámica:", a: ["Colores", "Cambia según usuario/BD", "HTML5", "Fast"], c: 1 },
+                { q: "XAMPP:", a: ["Solo WP", "A-M-P-P", "Editor", "Browser"], c: 1 },
+                { q: "SEO:", a: ["Seguridad", "Optimización motores búsqueda", "Envío", "Entrada"], c: 1 },
+                { q: "SaaS:", a: ["PC", "Navegador/Mantenimiento prov", "Gratis", "Local"], c: 1 },
+                { q: "Estructura web:", a: ["CSS", "PHP", "HTML", "SQL"], c: 2 },
+                { q: "Estilo web:", a: ["HTML", "JS", "CSS", "PHP"], c: 2 },
+                { q: "index.php raíz:", a: ["Fotos", "Punto entrada", "Mail", "Plugins"], c: 1 },
+                { q: "No cambia valor:", a: ["Dinam", "Constante", "Clase", "Func"], c: 1 },
+                { q: "index.php en la raíz:", a: ["Carpeta de fotos", "Punto de entrada principal", "Configuración email", "Plugins de pago"], c: 1 },
+                { q: "Variable que NO cambia su valor:", a: ["Dinámica", "Constante", "Clase", "Función"], c: 1 },
+                { q: "Comentario de una línea en PHP:", a: ["", "// o #", "/* */", "**"], c: 1 },
+                { q: "¿Qué lenguaje permite al servidor hablar con la BD?", a: ["HTML", "CSS", "SQL", "JS"], c: 2 },
+                { q: "Objetivo final arquitectura 3 capas:", a: ["Web más bonita", "Separar responsabilidades (Seguridad/Mantenimiento)", "Menos trabajo", "Eliminar BD"], c: 1 }
+            ]
+        };
+
+        let currentThemeId = '';
+        let currentQuestions = [];
+        let score = 0;
+        let answeredCount = 0;
+
+        // Mezcla aleatoria de preguntas (Fisher-Yates)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Cargar Tema y configurar Interfaz
+        function loadTheme(themeId, btn, color) {
+            currentThemeId = themeId;
+            score = 0;
+            answeredCount = 0;
+            
+            // Estilos dinámicos
+            document.documentElement.style.setProperty('--theme-color', color);
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            document.getElementById('display-title').innerText = btn.innerText.split('\n')[0];
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('btn-finalizar').style.display = 'none';
+
+            // Aleatorizar y Renderizar
+            currentQuestions = shuffle([...quizData[themeId]]);
+            renderQuestions();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            currentQuestions.forEach((item, qIdx) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-text">${qIdx + 1}. ${item.q}</div>
+                    <div class="options-grid" id="q-${qIdx}">
+                        ${item.a.map((opt, oIdx) => `
+                            <button class="option-btn" onclick="checkAnswer(this, ${qIdx}, ${oIdx}, ${item.c})">
+                                ${String.fromCharCode(65 + oIdx)}) ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(btn, qIdx, oIdx, correctIdx) {
+            const options = document.getElementById(`q-${qIdx}`).querySelectorAll('.option-btn');
+            
+            if (oIdx === correctIdx) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('incorrect');
+                options[correctIdx].classList.add('correct'); // Mostrar la correcta
+            }
+
+            // Bloquear opciones
+            options.forEach(b => b.disabled = true);
+            answeredCount++;
+
+            // Mostrar botón finalizar al terminar todas
+            if (answeredCount === currentQuestions.length) {
+                document.getElementById('btn-finalizar').style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+            
+            const total = currentQuestions.length;
+            const percent = (score / total) * 100;
+            const circle = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+            const quoteEl = document.getElementById('result-quote');
+
+            scoreDisplay.innerText = `${score}/${total}`;
+            
+            // Animación del Círculo (Circunferencia 565.48)
+            const offset = 565.48 - (percent / 100) * 565.48;
+            circle.style.strokeDashoffset = offset;
+            circle.style.stroke = percent >= 50 ? 'var(--success)' : 'var(--error)';
+
+            // Frases ingeniosas según resultado
+            const quotes = {
+                t1: percent >= 50 ? "¡Arquitecto de Sistemas! Tu infraestructura es redundante y segura." : "Error de segmentación: Tu arquitectura necesita un refactor completo.",
+                t2: percent >= 50 ? "¡WordPress Master! Has dominado el Loop y el wp-config." : "Error 500: Fallo crítico al cargar el conocimiento de WordPress.",
+                PHP: percent >= 50 ? "¡PHP Dev! Tu lógica es asíncrona y eficiente." : "Parse Error: Conocimiento no interpretado. Revisa la documentación.",
+                PHP: percent >= 50 ? "¡Lógica Pura! Has salido del bucle infinito con éxito." : "Bucle infinito detectado. Tu lógica ha entrado en stack overflow.",
+                PHP: percent >= 50 ? "¡Puntero de Arrays! Has indexado la información correctamente." : "Índice fuera de rango. Reasigna los punteros de tu memoria.",
+                EX: percent >= 50 ? "¡CERTIFICACIÓN HACKCAT OBTENIDA! Eres un Senior Developer." : "Acceso Denegado. Se requiere inyección de conocimiento en el backend."
+            };
+
+            quoteEl.innerText = quotes[currentThemeId] || "Análisis completado.";
+            window.scrollTo(0,0);
+        }
+
+        // Carga inicial (Tema 1 Rosa)
+        window.onload = () => {
+            const firstBtn = document.querySelector('.tab-rosa');
+            loadTheme('t1', firstBtn, '#f472b6');
+        };
+    </script>
+</body>
+</html>
