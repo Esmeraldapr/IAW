@@ -187,13 +187,13 @@
     </div>
 
     <div class="nav-container" id="theme-nav">
-    <button class="nav-btn tab-rosa" onclick="loadTheme('t1', this, '#f472b6')">Arquitectura <span>60 preguntas</span></button>
-    <button class="nav-btn tab-morado" onclick="loadTheme('t2', this, '#a78bfa')">WordPress <span>40 preguntas</span></button>
-    <button class="nav-btn tab-verde" onclick="loadTheme('php1', this, '#34d399')">PHP Entorno <span>40 preguntas</span></button>
-    <button class="nav-btn tab-azul" onclick="loadTheme('php2', this, '#60a5fa')">Maestría PHP/DB <span>70 preguntas</span></button>
-    <button class="nav-btn tab-amarillo" onclick="loadTheme('php3', this, '#fbbf24')">Consolidación <span>50 preguntas</span></button>
-    <button class="nav-btn tab-naranja" onclick="loadTheme('EX', this, '#fb923c')">EXAMEN FINAL <span>100 preguntas</span></button>
-</div>
+        <button class="nav-btn tab-rosa" onclick="loadTheme('t1', this, '#f472b6')">Arquitectura <span>60 preguntas</span></button>
+        <button class="nav-btn tab-morado" onclick="loadTheme('t2', this, '#a78bfa')">WordPress <span>40 preguntas</span></button>
+        <button class="nav-btn tab-verde" onclick="loadTheme('php1', this, '#34d399')">PHP Entorno <span>40 preguntas</span></button>
+        <button class="nav-btn tab-azul" onclick="loadTheme('php2', this, '#60a5fa')">Maestría PHP/DB <span>70 preguntas</span></button>
+        <button class="nav-btn tab-amarillo" onclick="loadTheme('php3', this, '#fbbf24')">Consolidación <span>50 preguntas</span></button>
+        <button class="nav-btn tab-naranja" onclick="loadTheme('EX', this, '#fb923c')">EXAMEN FINAL <span>100 preguntas</span></button>
+    </div>
 
     <div id="quiz-section">
         <div id="questions-container"></div>
@@ -214,9 +214,8 @@
     </div>
 
     <script>
-    // DATA: Todas las preguntas del usuario integradas
-    const quizData = {
-       t1: [ /* ARQUITECTURA 60 Qs CON EXPLICACIONES */
+        const quizData = {
+            t1: [ 
                 { q: "Si quiero desarrollar una aplicación nativa exclusivamente para MacOS, ¿qué lenguaje debería elegir según el esquema?", a: ["C#", "Java", "Swift", "Kotlin"], c: 2, e: "Swift es el lenguaje nativo de Apple para MacOS." },
                 { q: "¿Cuál es la principal característica de Java en el desarrollo de escritorio?", a: ["Es exclusivo de Windows.", "Es multiplataforma.", "Solo funciona en entornos móviles.", "Requiere Swift para ejecutarse."], c: 1, e: "Java Desktop se destaca por ser multiplataforma." },
                 { q: "Para el desarrollo móvil nativo en Android, los lenguajes de referencia son:", a: ["Javascript y Typescript.", "Swift y Objective-C.", "Kotlin y Java.", "PHP y Python."], c: 2, e: "Android nativo usa Java y su evolución moderna, Kotlin." },
@@ -278,11 +277,11 @@
                 { q: "Salesforce y Trello se categorizan como:", a: ["IaaS.", "PaaS.", "SaaS.", "Backend."], c: 2, e: "Son softwares que se consumen directamente por suscripción." },
                 { q: "¿Cuál fue el precursor directo del concepto 'todo como servicio' (XaaS)?", a: ["El lenguaje C#.", "El cloud computing.", "El utility computing.", "La arquitectura monolítica."], c: 2, e: "El utility computing introdujo el pago por uso que heredó el cloud." }
             ],
-        t2: [ /* WORDPRESS 40 Qs CON EXPLICACIONES */
+            t2: [ 
                 { q: "¿Cuál es la función principal de un CMS (Content Management System)?", a: ["Programar desde cero el acceso a las bases de datos.", "Permitir el desarrollo de la estructura y contenido sin programar aspectos básicos de gestión.", "Sustituir el uso de servidores web como Apache.", "Gestionar exclusivamente la seguridad del hardware del servidor."], c: 1, e: "El CMS permite centrarse en contenido sin programar la base (seguridad, DB)." },
                 { q: "Según el texto, ¿qué componentes integran un CMS?", a: ["Únicamente el Front-end.", "Únicamente el Back-end.", "Tanto el Back-end como el Front-end.", "Solo el motor de base de datos SQL."], c: 2, e: "Incluye tanto el panel de gestión (Back) como la visualización (Front)." },
                 { q: "WordPress se define como un software de:", a: ["Código cerrado.", "Código abierto (Open Source).", "Solo para aprendizaje online (LMS).", "Hardware distribuido."], c: 1, e: "WordPress es el proyecto de código abierto más famoso del mundo." },
-                { q: "¿Cuál es la principal diferencia de WordPress.com frente a WordPress.org?", a: "WordPress.com es software libre y .org es una empresa.", a: ["WordPress.com es software libre y .org es una empresa.", "WordPress.com es un modelo SaaS (Software as a Service) con menos libertad.", "WordPress.org no permite instalar plugins.", "WordPress.com requiere instalación manual en un servidor propio."], c: 1, e: ".com es un servicio en la nube (SaaS); .org es el software para instalar tú mismo." },
+                { q: "¿Cuál es la principal diferencia de WordPress.com frente a WordPress.org?", a: ["WordPress.com es software libre y .org es una empresa.", "WordPress.com es un modelo SaaS (Software as a Service) con menos libertad.", "WordPress.org no permite instalar plugins.", "WordPress.com requiere instalación manual en un servidor propio."], c: 1, e: ".com es un servicio en la nube (SaaS); .org es el software para instalar tú mismo." },
                 { q: "Si descargas el software, lo instalas en tu propio hosting y tienes control total del código, estás usando:", a: ["WordPress.com.", "WordPress.org.", "Un plugin de e-commerce.", "Un sistema monolítico de Xampp."], c: 1, e: "WordPress.org da el control total sobre el servidor y código." },
                 { q: "¿Qué fichero es el encargado de arrancar el WordPress desde el inicio?", a: ["wp-config.php", "wp-admin.php", "index.php", "wp-content.php"], c: 2, e: "Es el punto de entrada de cualquier aplicación web basada en PHP." },
                 { q: "¿Cuál es el archivo de configuración más crítico donde se definen las credenciales de la base de datos?", a: ["index.php", "wp-settings.php", "wp-config.php", "functions.php"], c: 2, e: "Sin este archivo, WordPress no sabe cómo conectar con los datos." },
@@ -320,7 +319,7 @@
                 { q: "¿Qué sucede si el archivo index.php es eliminado de la raíz de WordPress?", a: ["La web sigue funcionando pero sin imágenes.", "La web no puede arrancar y no se mostrará nada al usuario.", "WordPress descarga automáticamente una copia de seguridad.", "Solo se puede acceder a través de FTP."], c: 1, e: "El navegador no encontraría el archivo de inicio y daría error." },
                 { q: "¿Cuál de los siguientes es un ejemplo de 'Instalación preconfigurada'?", a: ["Descargar el zip de WordPress.org e instalarlo en local.", "Usar WordPress.com para crear un blog en 2 minutos sin servidor propio.", "Configurar manualmente el archivo wp-config.php.", "Aplicar chmod 777 a la carpeta htdocs."], c: 1, e: "WordPress.com te da el servicio ya montado ('llave en mano')." }
             ],
-php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
+            php1: [ 
                 { q: "¿Cuál es la función principal de PHP según el texto?", a: ["Diseñar interfaces gráficas vectoriales.", "Definir funciones, clases y obtener datos lógicos para enviarlos a un HTML.", "Compilar código para ejecutarlo directamente en el hardware del cliente.", "Sustituir el uso de etiquetas HTML como main."], c: 1, e: "PHP es un motor de lógica para generar contenido dinámico en HTML." },
                 { q: "¿Qué requisito es indispensable para empezar a programar y visualizar código PHP?", a: ["Abrir el archivo directamente con doble clic desde la carpeta.", "Tener el servidor Apache levantado (ej. vía XAMPP).", "Compilar el archivo .php antes de usarlo.", "Utilizar exclusivamente el navegador Internet Explorer."], c: 1, e: "PHP requiere un servidor (Apache) para ser interpretado; no funciona \"en frío\"." },
                 { q: "¿En qué carpeta de XAMPP se deben guardar los proyectos PHP para que el servidor los reconozca?", a: ["phpbin", "scripts", "htdocs", "apache_files"], c: 2, e: "Es la carpeta estándar de XAMPP para el despliegue web local." },
@@ -362,7 +361,7 @@ php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
                 { q: "¿Qué permite hacer PHP con respecto a los formularios?", a: ["Cambiarles el color mediante $formulario.", "Gestionar los datos enviados por el usuario y conectarlos con una base de datos.", "Evitar que el usuario tenga que usar el teclado.", "Solo sirven para decorar la página."], c: 1, e: "Es una de las utilidades más potentes de PHP en la web." },
                 { q: "¿Cuál es el flujo correcto para ver un cambio en un archivo PHP?", a: ["Guardar en VS Code -> Abrir archivo .php con doble clic.", "Guardar en VS Code -> Refrescar navegador con la URL de localhost.", "Compilar -> Reiniciar el ordenador -> Abrir navegador.", "Guardar en VS Code -> Ejecutar el comando \"run php\" en la consola de Windows."], c: 1, e: "Es el ciclo de desarrollo básico: editar, guardar y refrescar en servidor." }
             ],
-       php2: [ /* MAESTRÍA LOGICA/DB 70 Qs CON EXPLICACIONES */
+            php2: [ 
                 { q: "¿Qué valor lógico requiere una estructura de selección para ejecutar un bloque de código?", a: ["Un entero (1 o 0).", "Una condición lógica booleana (true).", "Un string con contenido.", "Una variable constante."], c: 1, e: "Lógica básica de if: condiciones booleanas y exclusividad." },
                 { q: "Si queremos ejecutar un código cuando la condición es verdadera y otro cuando es falsa, usamos:", a: ["Solo If.", "If - Else.", "If - Else If.", "Switch."], c: 1, e: "Lógica básica de if: condiciones booleanas y exclusividad." },
                 { q: "¿Cuál es la principal característica del if - else if?", a: ["Permite evaluar múltiples condiciones, siendo todas ellas inclusivas.", "Ejecuta todos los bloques cuyas condiciones sean ciertas.", "Permite evaluar múltiples condiciones excluyentes.", "Solo funciona con variables de tipo string."], c: 2, e: "Lógica básica de if: condiciones booleanas y exclusividad." },
@@ -434,7 +433,7 @@ php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
                 { q: "¿Qué sucede si intentas hacer un include de un archivo que no existe?", a: ["PHP se detiene con un Error Fatal.", "PHP lanza un Warning pero intenta seguir ejecutando el resto del código.", "El ordenador se reinicia.", "Se crea el archivo automáticamente."], c: 1, e: "Iteración eficiente y envío de formularios." },
                 { q: "¿Qué representa la arquitectura de \"Capas\" en el desarrollo profesional?", a: ["Tener muchos archivos con el mismo nombre.", "La división máxima de funcionalidades (Presentación, Negocio, Datos) para mayor seguridad y escalabilidad.", "Usar diferentes colores para cada sección de la web.", "Que el cliente y el servidor estén en el mismo ordenador siempre."], c: 1, e: "Iteración eficiente y envío de formularios." }
             ],
-      php3: [ /* CONSOLIDACIÓN 50 Qs CON EXPLICACIONES */
+            php3: [ 
                 { q: "En la arquitectura Cliente-Servidor, ¿cuál es el lenguaje que NO se ejecuta en el navegador?", a: ["HTML", "CSS", "PHP", "JavaScript"], c: 2, e: "PHP es procesado en el servidor antes de ser enviado al cliente." },
                 { q: "Odoo y Gmail son ejemplos claros de:", a: ["IaaS", "SaaS", "PaaS", "Desarrollo Nativo"], c: 1, e: "SaaS: El software y la infraestructura son gestionados por el proveedor." },
                 { q: "Si necesito configurar una red virtual y un sistema operativo desde cero en la nube, contrataré:", a: ["SaaS", "PaaS", "IaaS", "CMS"], c: 2, e: "IaaS: Infraestructura como Servicio, te da los recursos básicos vacíos." },
@@ -444,7 +443,7 @@ php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
                 { q: "Un \"plugin\" en WordPress se define como:", a: ["Un tema visual para cambiar colores.", "Un elemento que aporta funcionalidades extra.", "El archivo de configuración de la base de datos.", "Un usuario con permisos de administrador."], c: 1, e: "Los plugins expanden lo que WordPress puede hacer sin tocar su código base." },
                 { q: "Las aplicaciones ofimáticas web (como Google Docs) destacan por:", a: ["Requerir instalación local obligatoria.", "Colaboración en tiempo real y guardado en la nube.", "Funcionar solo sin conexión a internet.", "Ser aplicaciones puramente FatServer."], c: 1, e: "La inmediatez y la accesibilidad son sus mayores ventajas." },
                 { q: "Si quiero meter lógica de servidor en un archivo HTML, su extensión final debe ser:", a: [".html", ".php", ".js", ".sql"], c: 1, e: "Para que Apache pase el código por el intérprete de PHP, necesita esa extensión." },
-                { q: "Las etiquetas que delimitan el código PHP son:", a: ["<script><\/script>", "<?php ... ?>", "{% ... %}", "<php> ... </php>"], c: 1, e: "Es la sintaxis de apertura y cierre oficial de PHP." },
+                { q: "Las etiquetas que delimitan el código PHP son:", a: ["&lt;script&gt;&lt;/script&gt;", "&lt;?php ... ?&gt;", "{% ... %}", "&lt;php&gt; ... &lt;/php&gt;"], c: 1, e: "Es la sintaxis de apertura y cierre oficial de PHP." },
                 { q: "El método de envío de formularios que muestra los datos en la URL es:", a: ["POST", "SEND", "GET", "REQUEST"], c: 2, e: "GET se usa para pedir datos, no para enviarlos de forma segura." },
                 { q: "En un envío mediante POST, ¿dónde viajan los parámetros?", a: ["En la URL.", "En el cuerpo (body) de la petición HTTP.", "En el archivo wp-config.", "En la carpeta htdocs."], c: 1, e: "Viajan ocultos al usuario promedio, lo que es mejor para datos sensibles." },
                 { q: "Para recuperar un dato enviado por un formulario vía POST con nombre \"user\", uso:", a: ["$GET['user']", "$_POST['user']", "$POST_user", "fetch_assoc('user')"], c: 1, e: "$_POST es la variable superglobal que recoge estos datos." },
@@ -486,7 +485,7 @@ php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
                 { q: "¿Para qué sirve el operador lógico && en PHP?", a: ["O (Una de las dos debe cumplirse).", "Y (Ambas deben cumplirse).", "No (Invierte el valor).", "Igual que."], c: 1, e: "Requiere que tanto la condición de la izquierda como la de la derecha sean verdaderas." },
                 { q: "Al final del día, la meta principal de separar código en capas y archivos es:", a: ["Mantenibilidad, seguridad y escalabilidad del proyecto.", "Que el código sea más difícil de leer para otros.", "Que el servidor gaste menos electricidad.", "Que las imágenes carguen más rápido."], c: 0, e: "Es el estándar profesional para construir aplicaciones robustas a largo plazo." }
             ],
-       EX: [ /* GRAN EXAMEN FINAL 100 Qs CON EXPLICACIONES */
+            EX: [ 
                 { q: "Una aplicación donde todo el código está acoplado en un único bloque se llama:", a: ["Distribuida", "Monolítica", "Microservicios", "SaaS"], c: 1, e: "Una arquitectura monolítica junta interfaz, negocio y datos en un solo lugar." },
                 { q: "¿Qué capa se encarga de procesar las reglas y cálculos de la aplicación?", a: ["Capa de Datos", "Capa de Presentación", "Capa de Lógica", "Capa de Red"], c: 2, e: "La capa de lógica (o negocio) es el 'cerebro' que procesa la información." },
                 { q: "En un modelo 'FatClient', ¿dónde reside el mayor peso de la ejecución?", a: ["En el servidor", "En la base de datos", "En el navegador del usuario", "En el balanceador de carga"], c: 2, e: "Un 'Cliente Gordo' delega la mayoría del procesamiento al dispositivo del usuario." },
@@ -587,148 +586,135 @@ php1: [ /* PHP ENTORNO 40 Qs CON EXPLICACIONES */
                 { q: "¿Qué lenguaje permite al servidor 'hablar' con la base de datos?", a: ["HTML", "CSS", "SQL", "JS"], c: 2, e: "Structured Query Language es el idioma universal de las bases de datos relacionales." },
                 { q: "El objetivo final de la arquitectura de 3 capas es:", a: ["Que la web sea más bonita", "Separar responsabilidades para facilitar mantenimiento y seguridad", "Que el programador trabaje menos", "Eliminar el uso de bases de datos"], c: 1, e: "Un diseño robusto hace el código más limpio, seguro y fácil de actualizar." }
             ]
-    };
-
-    let currentThemeId = '';
-    let currentQuestions = [];
-    let score = 0;
-    let answeredCount = 0;
-
-    // Mezcla aleatoria de preguntas (Fisher-Yates)
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    // Cargar Tema y configurar Interfaz
-    function loadTheme(themeId, btn, color) {
-        currentThemeId = themeId;
-        score = 0;
-        answeredCount = 0;
-        
-        // Estilos dinámicos
-        document.documentElement.style.setProperty('--theme-color', color);
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        // Obtener solo el nombre del tema de forma 100% segura (sin el span ni saltos de línea)
-        const titleText = btn.childNodes[0].nodeValue.trim();
-        const titleEl = document.getElementById('theme-display-title');
-        if(titleEl) titleEl.innerText = titleText;
-
-        document.getElementById('quiz-section').style.display = 'block';
-        document.getElementById('results-section').style.display = 'none';
-        document.getElementById('btn-finalizar').style.display = 'none';
-
-        // Aleatorizar y Renderizar
-        currentQuestions = shuffle([...quizData[themeId]]);
-        renderQuestions();
-        window.scrollTo({ top: 300, behavior: 'smooth' });
-    }
-
-   function renderQuestions() {
-        const container = document.getElementById('questions-container');
-        container.innerHTML = '';
-        
-        currentQuestions.forEach((item, qIdx) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            
-            // Reemplazar los corchetes HTML de tus preguntas para que el navegador no los borre
-            const safeQ = String(item.q).replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            
-            let optionsHTML = '';
-            item.a.forEach((opt, oIdx) => {
-                const safeOpt = String(opt).replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                optionsHTML += `<button class="option-btn" onclick="checkAnswer(this, ${qIdx}, ${oIdx}, ${item.c})">${String.fromCharCode(65 + oIdx)}) ${safeOpt}</button>`;
-            });
-
-            // Añadimos el bloque de explicación (oculto por defecto). 
-            // Si la pregunta no tiene 'e' (explicación), creamos un string vacío.
-            const explanationHTML = item.e 
-                ? `<div id="exp-${qIdx}" style="display:none; margin-top:20px; padding:15px; background-color:#1c2128; border-left:4px solid var(--theme-color); border-radius:6px; font-size:1rem; color:#a5d6ff;">
-                    <strong>💡 Explicación:</strong> ${item.e}
-                   </div>` 
-                : '';
-
-            card.innerHTML = `
-                <div class="question-text">${qIdx + 1}. ${safeQ}</div>
-                <div class="options-grid" id="q-${qIdx}">
-                    ${optionsHTML}
-                </div>
-                ${explanationHTML}
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    function checkAnswer(btn, qIdx, oIdx, correctIdx) {
-        const options = document.getElementById(`q-${qIdx}`).querySelectorAll('.option-btn');
-        
-        if (oIdx === correctIdx) {
-            btn.classList.add('correct');
-            score++;
-        } else {
-            btn.classList.add('incorrect');
-            options[correctIdx].classList.add('correct'); // Mostrar la correcta
-        }
-
-        // Mostrar la explicación (si existe)
-        const expDiv = document.getElementById(`exp-${qIdx}`);
-        if(expDiv) {
-            expDiv.style.display = 'block';
-            expDiv.style.animation = 'fadeIn 0.5s ease-out'; // Le añadimos una entrada suave
-        }
-
-        // Bloquear opciones
-        options.forEach(b => b.disabled = true);
-        answeredCount++;
-
-        // Mostrar botón finalizar al terminar todas
-        if (answeredCount === currentQuestions.length) {
-            document.getElementById('btn-finalizar').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-    }
-    function showResults() {
-        document.getElementById('quiz-section').style.display = 'none';
-        document.getElementById('results-section').style.display = 'block';
-        
-        const total = currentQuestions.length;
-        const percent = (score / total) * 100;
-        const circle = document.getElementById('progress-bar');
-        const scoreDisplay = document.getElementById('score-display');
-        const quoteEl = document.getElementById('result-quote');
-
-        scoreDisplay.innerText = `${score}/${total}`;
-        
-        // Animación del Círculo (Circunferencia 565.48)
-        const offset = 565.48 - (percent / 100) * 565.48;
-        circle.style.strokeDashoffset = offset;
-        circle.style.stroke = percent >= 50 ? 'var(--success)' : 'var(--error)';
-
-        // Frases ingeniosas según resultado
-        const quotes = {
-            t1: percent >= 50 ? "¡Arquitecto de Sistemas! Tu infraestructura es redundante y segura." : "Error de segmentación: Tu arquitectura necesita un refactor completo.",
-            t2: percent >= 50 ? "¡WordPress Master! Has dominado el Loop y el wp-config." : "Error 500: Fallo crítico al cargar el conocimiento de WordPress.",
-            php1: percent >= 50 ? "¡PHP Dev! Tu lógica es asíncrona y eficiente." : "Parse Error: Conocimiento no interpretado. Revisa la documentación.",
-            php2: percent >= 50 ? "¡Lógica Pura! Has salido del bucle infinito con éxito." : "Bucle infinito detectado. Tu lógica ha entrado en stack overflow.",
-            php3: percent >= 50 ? "¡Puntero de Arrays! Has indexado la información correctamente." : "Índice fuera de rango. Reasigna los punteros de tu memoria.",
-            EX: percent >= 50 ? "¡CERTIFICACIÓN HACKCAT OBTENIDA! Eres un Senior Developer." : "Acceso Denegado. Se requiere inyección de conocimiento en el backend."
         };
 
-        quoteEl.innerText = quotes[currentThemeId] || "Análisis completado.";
-        window.scrollTo(0,0);
-    }
+        let currentThemeId = '';
+        let currentQuestions = [];
+        let score = 0;
+        let answeredCount = 0;
 
-    // Carga inicial (Tema 1 Rosa)
-    window.onload = () => {
-        const firstBtn = document.querySelector('.tab-rosa');
-        if(firstBtn) loadTheme('t1', firstBtn, '#f472b6');
-    };
-</script>
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadTheme(themeId, btn, color) {
+            currentThemeId = themeId;
+            score = 0;
+            answeredCount = 0;
+            
+            document.documentElement.style.setProperty('--theme-color', color);
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const titleText = btn.childNodes[0].nodeValue.trim();
+            const titleEl = document.getElementById('theme-display-title');
+            if(titleEl) titleEl.innerText = titleText;
+
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('btn-finalizar').style.display = 'none';
+
+            currentQuestions = shuffle([...quizData[themeId]]);
+            renderQuestions();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            currentQuestions.forEach((item, qIdx) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                const safeQ = String(item.q).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                
+                let optionsHTML = '';
+                item.a.forEach((opt, oIdx) => {
+                    const safeOpt = String(opt).replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    optionsHTML += `<button class="option-btn" onclick="checkAnswer(this, ${qIdx}, ${oIdx}, ${item.c})">${String.fromCharCode(65 + oIdx)}) ${safeOpt}</button>`;
+                });
+
+                const explanationHTML = item.e 
+                    ? `<div id="exp-${qIdx}" style="display:none; margin-top:20px; padding:15px; background-color:#1c2128; border-left:4px solid var(--theme-color); border-radius:6px; font-size:1rem; color:#a5d6ff;">
+                        <strong>💡 Explicación:</strong> ${item.e}
+                       </div>` 
+                    : '';
+
+                card.innerHTML = `
+                    <div class="question-text">${qIdx + 1}. ${safeQ}</div>
+                    <div class="options-grid" id="q-${qIdx}">
+                        ${optionsHTML}
+                    </div>
+                    ${explanationHTML}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(btn, qIdx, oIdx, correctIdx) {
+            const options = document.getElementById(`q-${qIdx}`).querySelectorAll('.option-btn');
+            
+            if (oIdx === correctIdx) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('incorrect');
+                options[correctIdx].classList.add('correct'); 
+            }
+
+            const expDiv = document.getElementById(`exp-${qIdx}`);
+            if(expDiv) {
+                expDiv.style.display = 'block';
+                expDiv.style.animation = 'fadeIn 0.5s ease-out';
+            }
+
+            options.forEach(b => b.disabled = true);
+            answeredCount++;
+
+            if (answeredCount === currentQuestions.length) {
+                document.getElementById('btn-finalizar').style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+            
+            const total = currentQuestions.length;
+            const percent = (score / total) * 100;
+            const circle = document.getElementById('progress-bar');
+            const scoreDisplay = document.getElementById('score-display');
+            const quoteEl = document.getElementById('result-quote');
+
+            scoreDisplay.innerText = `${score}/${total}`;
+            
+            const offset = 565.48 - (percent / 100) * 565.48;
+            circle.style.strokeDashoffset = offset;
+            circle.style.stroke = percent >= 50 ? 'var(--success)' : 'var(--error)';
+
+            const quotes = {
+                t1: percent >= 50 ? "¡Arquitecto de Sistemas! Tu infraestructura es redundante y segura." : "Error de segmentación: Tu arquitectura necesita un refactor completo.",
+                t2: percent >= 50 ? "¡WordPress Master! Has dominado el Loop y el wp-config." : "Error 500: Fallo crítico al cargar el conocimiento de WordPress.",
+                php1: percent >= 50 ? "¡PHP Dev! Tu lógica es asíncrona y eficiente." : "Parse Error: Conocimiento no interpretado. Revisa la documentación.",
+                php2: percent >= 50 ? "¡Lógica Pura! Has salido del bucle infinito con éxito." : "Bucle infinito detectado. Tu lógica ha entrado en stack overflow.",
+                php3: percent >= 50 ? "¡Puntero de Arrays! Has indexado la información correctamente." : "Índice fuera de rango. Reasigna los punteros de tu memoria.",
+                EX: percent >= 50 ? "¡CERTIFICACIÓN HACKCAT OBTENIDA! Eres un Senior Developer." : "Acceso Denegado. Se requiere inyección de conocimiento en el backend."
+            };
+
+            quoteEl.innerText = quotes[currentThemeId] || "Análisis completado.";
+            window.scrollTo(0,0);
+        }
+
+        window.onload = () => {
+            const firstBtn = document.querySelector('.tab-rosa');
+            if(firstBtn) loadTheme('t1', firstBtn, '#f472b6');
+        };
+    </script>
 </body>
 </html>
